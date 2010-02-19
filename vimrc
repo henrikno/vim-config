@@ -1,8 +1,8 @@
+set nocompatible
 
 let mapleader = ","
 
-" set filetype stuff to on
-filetype on
+syntax on
 filetype plugin on
 filetype indent on
 
@@ -26,13 +26,17 @@ set smartcase " smart search... lowercase = any case
 set shiftround
 set hidden
 set guioptions-=T
-set wildmode=longest:full,full
+"set wildmode=longest:full,full
 set wildmenu
+set wildignore=*.o,*.obj,*.class
 set showmode
 set showcmd
 set hlsearch
-set nocompatible
 "set mouse=a
+set modeline
+set nowrap
+
+set pastetoggle=<F8>
 
 set backupdir=~/.backup
 set dir=~/.backup
@@ -68,18 +72,19 @@ set foldenable
 "set foldopen=block,hor,mark,percent,quickfix,tag
 
 " make [[ etc. work with { at end of if/while...
-:map [[ ?{<CR>w99[{
-:map ][ /}<CR>b99]}
-:map ]] j0[[%/{<CR>
-:map [] k$][%?}<CR>
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
 
 " make cd <curdir>
-map ,cd :cd %:p:h<CR>
+nmap <Leader>cd :cd %:p:h<CR>
+nmap <Leader>lcd :lcd %:p:h<CR>
 
 " shortcut to Alternate file
-map ,a :A<CR>
+nmap <Leader>a :A<CR>
 
-set history=300
+set history=1000
 
 " Keyboard shortcuts
 map <F6> :b#<CR>
@@ -87,6 +92,7 @@ map <F6> :b#<CR>
 "nnoremap <C-p> :bprevious<CR>
 inoremap <C-E> <C-X><C-E>
 inoremap <C-Y> <C-X><C-Y>
+nmap <F3> @q
 
 
 " Save and make current file.o
@@ -103,10 +109,6 @@ endfunction
 nnoremap <F5> :update<CR>:call Make()<CR>
 
 
-map <Leader>b :FufBuffer<CR>
-nmap ,fb :FufBuffer<CR>
-nmap ,ff :FufFile<CR>
-nmap ,ft :FufTag<CR>
 
 " Edit the vimrc file
 nmap <silent> ,ev :e $MYVIMRC<CR>
@@ -135,3 +137,88 @@ function! INC(increment)
     let g:I =g:I + a:increment
     return g:I
 endfunction
+
+
+
+"vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+"vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+"vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+"vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+"vnoremap $q <esc>`>a'<esc>`<i'<esc>
+"vnoremap $e <esc>`>a"<esc>`<i"<esc>
+
+"inoremap $1 ()<esc>i
+"inoremap $2 []<esc>i
+"inoremap $3 {}<esc>i
+"inoremap $4 {<esc>o}<esc>O
+"inoremap $q ''<esc>i
+"inoremap $e ""<esc>i
+
+
+
+
+" omni-complete
+autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+set tags+=~/.vim/tags/c
+set tags+=~/.vim/tags/cpp
+set suffixes+=.class
+imap <silent> <C-SPACE> <C-X><C-O>
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ src
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=longest,menuone,menu,preview
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+
+nmap <C-Tab> <C-W><C-W>
+nmap <S-Right> :bnext<CR>
+nmap <S-Left> :bprevious<CR>
+
+cab Q q
+cab W w
+
+iab sysout System.out.println(
+
+
+""""""""""""""""
+""" PLUGINS
+""""""""""""""""
+
+" Fuf settings
+"nmap <Leader>b :FufBuffer<CR>
+"nmap <Leader>f :FufFile<CR>
+"nmap <Leader>t :FufTag<CR>
+let g:fuf_modesDisable = []
+
+let g:fuf_mrufile_maxItem = 300
+let g:fuf_splitPathMatching = 1
+let g:fuf_keyOpenTwo = '<Tab>'
+nnoremap <silent> <Leader>b      :FufBuffer<CR>
+nnoremap <silent> <Leader>f      :FufFileWithCurrentBufferDir<CR>
+"nnoremap <silent> <C-f><C-p> :FufFileWithFullCwd<CR>
+nnoremap <silent> <Leader>sf     :FufFile<CR>
+nnoremap <silent> <Leader>m      :FufMruFile<CR>
+"nnoremap <silent> <C-k>      :FufMruCmd<CR>
+"nnoremap <silent> <C-b>      :FufBookmark<CR>
+"nnoremap <silent> <C-f><C-t> :FufTag<CR>
+"nnoremap <silent> <C-f>t     :FufTag!<CR>
+"noremap  <silent> g]         :FufTagWithCursorWord!<CR>
+"nnoremap <silent> <C-f><C-f> :FufTaggedFile<CR>
+"nnoremap <silent> <C-f><C-j> :FufJumpList<CR>
+"nnoremap <silent> <C-f><C-g> :FufChangeList<CR>
+"nnoremap <silent> <C-f><C-q> :FufQuickfix<CR>
+"nnoremap <silent> <C-f><C-b> :FufAddBookmark<CR>
+"vnoremap <silent> <C-f><C-b> :FufAddBookmarkAsSelectedText<CR>
+"nnoremap <silent> <C-f><C-e> :FufEditInfo<CR>
+"nnoremap <silent> <C-f><C-r> :FufRenewCache<CR>

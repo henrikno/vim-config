@@ -3,7 +3,7 @@
 "
 " GetLatestVimScripts: 1984 1 :AutoInstall: FuzzyFinder
 "=============================================================================
-" LOAD GUARD {{{1
+" LOAD GUARD {{{1"{{{
 
 if exists('g:loaded_fuf')
   finish
@@ -13,7 +13,7 @@ elseif v:version < 702
 endif
 let g:loaded_fuf = 1
 
-" }}}1
+" }}}1"}}}
 "=============================================================================
 " LOCAL FUNCTIONS {{{1
 

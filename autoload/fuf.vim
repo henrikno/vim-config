@@ -294,6 +294,7 @@ function fuf#launch(modeName, initialPattern, partialMatching)
   " local mapping
   for [key, func] in [
         \   [ g:fuf_keyOpen       , 'onCr(' . s:OPEN_TYPE_CURRENT . ', 0)' ],
+        \   [ g:fuf_keyOpenTwo    , 'onCr(' . s:OPEN_TYPE_CURRENT . ', 0)' ],
         \   [ g:fuf_keyOpenSplit  , 'onCr(' . s:OPEN_TYPE_SPLIT   . ', 0)' ],
         \   [ g:fuf_keyOpenVsplit , 'onCr(' . s:OPEN_TYPE_VSPLIT  . ', 0)' ],
         \   [ g:fuf_keyOpenTabpage, 'onCr(' . s:OPEN_TYPE_TAB     . ', 0)' ],
