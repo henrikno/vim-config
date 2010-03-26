@@ -189,6 +189,10 @@ cab Q q
 cab W w
 
 iab sysout System.out.println(
+iab reutnr return
+iab reutrn return
+iab fucntion function
+iab functoin function
 
 
 """"""""""""""""
@@ -222,3 +226,6 @@ nnoremap <silent> <Leader>m      :FufMruFile<CR>
 "vnoremap <silent> <C-f><C-b> :FufAddBookmarkAsSelectedText<CR>
 "nnoremap <silent> <C-f><C-e> :FufEditInfo<CR>
 "nnoremap <silent> <C-f><C-r> :FufRenewCache<CR>
+
+
+iab syso System.out.println(
